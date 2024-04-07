@@ -1,0 +1,87 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Task {
+    int id;
+    string description;
+};
+
+class TodoList {
+private:
+    vector<Task> tasks;
+    int nextId;
+
+public:
+    TodoList() : nextId(1) {}
+
+    void addTask(const string& description) {
+        tasks.push_back({nextId++, description});
+        cout << "Task added successfully!" << endl;
+    }
+
+    void viewTasks() {
+        if (tasks.empty()) {
+            cout << "No tasks available." << endl;
+        } else {
+            cout << "Tasks:" << endl;
+            for (const auto& task : tasks) {
+                cout << task.id << ". " << task.description << endl;
+            }
+        }
+    }
+
+    void deleteTask(int taskId) {
+        auto it = find_if(tasks.begin(), tasks.end(), [taskId](const Task& task) {
+            return task.id == taskId;
+        });
+
+        if (it != tasks.end()) {
+            tasks.erase(it);
+            cout << "Task deleted successfully!" << endl;
+        } else {
+            cout << "Task not found." << endl;
+        }
+    }
+};
+
+int main() {
+    TodoList todoList;
+
+    while (true) {
+        cout << "1. Add Task\n2. View Tasks\n3. Delete Task\n4. Exit" << endl;
+        cout << "Enter your choice: ";
+        int choice;
+        cin >> choice;
+
+        switch (choice) {
+            case 1: {
+                string description;
+                cout << "Enter task description: ";
+                cin.ignore();
+                getline(cin, description);
+                todoList.addTask(description);
+                break;
+            }
+            case 2:
+                todoList.viewTasks();
+                break;
+            case 3: {
+                int taskId;
+                cout << "Enter task ID to delete: ";
+                cin >> taskId;
+                todoList.deleteTask(taskId);
+                break;
+            }
+            case 4:
+                cout << "Exiting program." << endl;
+                return 0;
+            default:
+                cout << "Invalid choice. Please try again." << endl;
+        }
+    }
+
+    return 0;
+}
