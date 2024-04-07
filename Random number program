@@ -1,0 +1,43 @@
+#include <iostream>
+#include <cstdlib>
+#include <ctime>
+
+using namespace std;
+
+namespace GuessGame {
+    class NumberGuesser {
+    private:
+        int secretNumber;
+        int numGuesses;
+
+    public:
+        NumberGuesser() : numGuesses(0) {
+            srand(time(NULL)); // Seed the random number generator
+            secretNumber = rand() % 100 + 1; // Generate a random number between 1 and 100
+        }
+
+        void playGame() {
+            int guess;
+            cout << "Guess the number (between 1 and 100): ";
+            cin >> guess;
+            numGuesses++;
+
+            if (guess == secretNumber) {
+                cout << "Congratulations! You guessed the number " << secretNumber << " in " << numGuesses << " guesses." << endl;
+            } else if (guess > secretNumber) {
+                cout << "Too high! Try again." << endl;
+                playGame();
+            } else {
+                cout << "Too low! Try again." << endl;
+                playGame();
+            }
+        }
+    };
+}
+
+int main() {
+    GuessGame::NumberGuesser game;
+    game.playGame();
+
+    return 0;
+}
