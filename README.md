@@ -1,2 +1,2 @@
-# CODSOFT
-Doing Internship in C++ 
+#Basic Hands on Projects by using C++
+>Basic level projects using C++ 
